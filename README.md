@@ -92,7 +92,7 @@ To run the Docker containers, use the following command:
 $ docker-compose up
 ```
 
-These last command will run these 7 containers:
+This command will run these containers:
 
 - **db**: This container runs a PostgreSQL database. The named volume **db_data** is used for data persistence.
 
@@ -107,7 +107,7 @@ These last command will run these 7 containers:
 - **beat**: This container runs the Celery Beat service. Celery Beat is a scheduler; it kicks off configured tasks at regular intervals or a specific future date. In this particular project, Celery Beat is not directly utilized. However, it's been set up for demonstration purposes and to be ready within the docker-compose file for potential future enhancements. One use case could be to automatically retry a failed task after a specific time interval. This would allow for more robust handling of transient errors in task dependencies (such as a temporarily unavailable external service).
 
 ### <u>Step 4:</u> Run Tests
-Run tests directly on the backend container with this command on another terminal:
+Open a new terminal and run tests directly on the backend container with the following command:
 
 ```bash
 $ docker exec -it api_backend python manage.py test
