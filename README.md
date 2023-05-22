@@ -5,7 +5,7 @@
 
 This repository contains a simple REST API developed using Django, the Django REST Framework, and Celery. This API is designed to store and serve images. It provides an endpoint to upload images, retrieve the list of images, and get specific image details. 
 
-Images uploaded are stored in an Amazon S3 bucket and are optimized for size.. The API also provides options to resize images and filter them based on their titles.
+Images uploaded are stored in an Amazon S3 bucket and are optimized for size. The API also provides options to resize images and filter them based on their titles.
 
 An important feature of this API is the use of Celery for asynchronous task processing. Resizing, optimization and remote storage operations are managed in the background using Celery tasks. This approach allows the API to swiftly return a response to the client, rather than making the client wait for these potentially time-consuming operations to be completed.
 
@@ -51,8 +51,6 @@ This approach has several benefits. The API can handle more requests in a shorte
     |   |   |---views.py
     |   |---media               # images app
     |   |   |---tempImageFiles  # temporal folder for user uploaded images
-    |   |---staticfiles
-    |   |   |---(...) 
     |   |---.env.dev            # environmental variables for development
     |   |---custom_storage.py   # S3 storage configuration file
     |   |---Dockerfile          # Dockerfile for backend build
@@ -71,7 +69,7 @@ To get this project up and running locally follow the steps below:
 ### <u>Step 1:</u> Set AWS Credentials
 
 AWS_STORAGE_BUCKET_NAME=your-s3-bucket-name
-Add your AWS credentials to the `.env.dev` file. You will need to set your `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_STORAGE_BUCKET_NAME`. It should look like this:
+Add your AWS credentials to the `src/.env.dev` file. You will need to set your `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_STORAGE_BUCKET_NAME`. It should look like this:
 
 ```env
 AWS_ACCESS_KEY_ID=your-access-key-id
@@ -120,7 +118,7 @@ If everything went well you should see something like this:
 Creating test database for alias 'default'...
 System check identified no issues (0 silenced).
 --------------------------
-Ran 7 tests in 0.123s
+Ran 8 tests in 0.123s
 
 OK
 ```
