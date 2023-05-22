@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "d7ed896c-2a22-4b1e-8341-ca91a0f848fe",
+		"name": "image_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24392655"
+	},
+	"item": [
+		{
+			"name": "paginated images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/images/",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "image by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/images/1/",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"images",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filter by title",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/images/?search=cat",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"images",
+						""
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "cat"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "",
+							"description": "can be empty",
+							"type": "text"
+						},
+						{
+							"key": "width",
+							"value": "20",
+							"contentType": "",
+							"description": "cannot be empty",
+							"type": "text"
+						},
+						{
+							"key": "height",
+							"value": "20",
+							"description": "cannot be empty",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"description": "cannot be empty",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/images/",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit title",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "hey",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/images/1/",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"images",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost/images/1/",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"images",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
