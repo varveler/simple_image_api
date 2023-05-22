@@ -1,0 +1,229 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Image_Processing_API
+  description: >-
+    This API is designed to store and serve images. It provides an endpoint to
+    upload images, retrieve the list of images, and get specific image details.
+paths:
+  /images/:
+    get:
+      summary: Paginated list of images
+      description: This endpoint returns a paginated list of images, it can also filter images by their title.
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Keyword to search images by title
+          required: false
+      responses:
+        '200':
+          description: A JSON object with paginated list of images
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: The total number of images retrieved
+                  next:
+                    type: string
+                    description: A link to the next page
+                  previous:
+                    type: string
+                    description: Link to the previous page
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Image'
+    post:
+      summary: Upload an image
+      description: This endpoint allows for uploading an image to be resized, compressed and stored.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The title of the image
+                  required: false
+                width:
+                  type: integer
+                  description: The width to resize the image to
+                  maximum: 400
+                  required: true
+                height:
+                  type: integer
+                  description: The height to resize the image to
+                  maximum: 400
+                  required: true
+                image:
+                  type: string
+                  format: binary
+                  description: The image file to upload
+                  required: true
+      responses:
+        '200':
+          description: Image uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "OK"
+                  result:
+                    type: string
+                    example: "processing image"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  width:
+                    type: array
+                    items:
+                      type: string
+                      example: ["A valid integer is required.", "Ensure this value is less than or equal to 400."]
+                  height:
+                    type: array
+                    items:
+                      type: string
+                      example: ["A valid integer is required.", "Ensure this value is less than or equal to 400."]
+                  image:
+                    type: array
+                    items:
+                      type: string
+                      example: ["The submitted data was not a file. Check the encoding type on the form.", "Upload a valid image. The file you uploaded was either not an image or a corrupted image."]
+  /images/{id}:
+    get:
+      summary: Get an image details by ID
+      description: This endpoint returns a single image based on its ID.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the image
+      responses:
+        '200':
+          description: A JSON object of a single image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+    put:
+      summary: Update image title
+      description: This endpoint allows for updating the title of an image.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the image
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The new title of the image
+      responses:
+        '200':
+          description: Image updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+    delete:
+      summary: Delete an image
+      description: This endpoint allows for deleting an image by its ID.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the image
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+components:
+  schemas:
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the image in the database
+        title:
+          type: string
+          description: The title of the image
+        width:
+          type: integer
+          description: The width of the image
+        height:
+          type: integer
+          description: The height of the image
+        url:
+          type: string
+          description: The URL to the image file
+        image:
+          type: string
+          description: Default image representation from Database, for the case also URL storage
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/EVARVAL/SIMPLE_Image_Processing_And_Storing_API/1.0
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/EVARVAL/Image_Processing_API/1.0
